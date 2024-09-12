@@ -38,3 +38,27 @@ row-major memory layout : C, C++, Java, Python, NumPy
 * Lower-Level Operations: NumPy operations are implemented in C, and they interface directly with low-level memory management, leading to significant performance improvements over the higher-level abstractions in Pandas.
 
 * Reduced Overhead: Pandas provides more functionality and flexibility for data manipulation and analysis, which comes with additional overhead. This makes it slower for tasks where these additional features are not necessary.
+
+**Python Memory Management**
+
+**Heap Memory**
+* Heap memory is used for dynamic memory allocation. This includes objects like lists, dictionaries, and class instances, which are created and managed at runtime.
+* Heap memory is managed through Python’s memory manager and garbage collector. Python uses a combination of reference counting and generational garbage collection to handle the lifecycle of objects and reclaim memory when objects are no longer needed.
+* Python uses memory pools and arenas to manage heap memory efficiently. Objects are allocated in fixed-size blocks from these pools, which helps reduce fragmentation and improve performance.
+
+**Stack Memory**
+* Stack memory is used for managing function calls and local variables. Each time a function is called, a new stack frame is created to hold the function’s local variables, arguments, and return address.
+
+**How Memory Pools Work in Python**
+PyMalloc:
+PyMalloc is Python's specialized allocator for small objects. It uses a system of memory pools to manage memory efficiently.
+PyMalloc organizes memory into different pools based on the size of the objects being allocated. Each pool is a collection of memory blocks of a specific size.
+
+Object Allocation:
+When an object is created, Python’s memory manager allocates memory from the appropriate pool based on the object’s size. For example, objects that fit into a small block size are allocated from a pool dedicated to small objects.
+
+Object Deallocation:
+When an object is no longer needed, its memory is returned to the pool rather than being freed back to the operating system. This memory can then be reused for future allocations, reducing the overhead of repeated allocations and deallocations.
+
+Memory Arenas:
+Arenas are large blocks of memory that are divided into smaller pools. Python allocates and manages memory in these arenas to handle large numbers of small objects efficiently.
